@@ -15,8 +15,16 @@ public class ImageController {
 	@Autowired
 	private ImageSearcher imageSearcher;
 	
+	@Autowired
+	private Model3DSearcher modelSearch;
+	
 	@GetMapping("/image/{q}")
 	public ResponseEntity<SearchResults> searchImage( @PathVariable("q") String q) {
 		return new ResponseEntity<SearchResults>(imageSearcher.getPhotos("Client-ID "+Constants.UNSLASH_ACESS_KEY, q ), HttpStatus.OK );
+	}
+	
+	@GetMapping("/models/{keyword}")
+	public ResponseEntity<String> searchModels(@PathVariable("keyword") String keyword){
+		return new ResponseEntity<String>(modelSearch.get3DModels(keyword, "AIzaSyBEqxqylCl-ppAEm0OVTLtNZ--1pwdcmYc"), HttpStatus.OK);
 	}
 }
